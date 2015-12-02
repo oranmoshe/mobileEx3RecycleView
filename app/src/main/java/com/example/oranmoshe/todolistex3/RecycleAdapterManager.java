@@ -1,6 +1,9 @@
 package com.example.oranmoshe.todolistex3;
 
 import java.util.ArrayList;
+
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +11,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RecycleAdapterManager extends RecyclerView.Adapter<RecycleAdapterManager.ViewHolder> {
     private ArrayList<String> mDataset;
+    private final ArrayList<Integer> selected = new ArrayList<>();
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -60,7 +65,7 @@ public class RecycleAdapterManager extends RecyclerView.Adapter<RecycleAdapterMa
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final String name = mDataset.get(position);
@@ -71,14 +76,35 @@ public class RecycleAdapterManager extends RecyclerView.Adapter<RecycleAdapterMa
                 remove(name);
             }
         });
-        final int pos = position;
         holder.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                remove(pos);
+              //  remove(holder.getAdapterPosition());
+
+                if (!selected.contains(holder.getAdapterPosition())) {
+                    selected.add(holder.getAdapterPosition());
+
+                }else{
+                    int index = selected.indexOf(holder.getAdapterPosition());
+                    selected.remove(index);
+                }
+                notifyItemChanged(holder.getAdapterPosition());
             }
         });
+
+        // each time an item comes into view, its position is checked
+        // against "selected" indices
+        if (!selected.contains(position)){
+            // view not selected
+            holder.itemView.setBackgroundColor(Color.LTGRAY);
+            holder.btn.setText("Done");
+        }
+        else{
+            // view is selected
+            holder.itemView.setBackgroundColor(Color.CYAN);
+            holder.btn.setText("Undo");
+        }
 
     }
 

@@ -17,10 +17,9 @@ public class MainActivityAddRecycleTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity_add_recycle_task);
 
+        items = new ArrayList<String>();
         items = (ArrayList<String>)getIntent().getSerializableExtra(SER_KEY);
-        for(String object: items){
-            Toast.makeText(getBaseContext(),object, Toast.LENGTH_LONG).show();
-        }
+
     }
 
 
@@ -29,9 +28,9 @@ public class MainActivityAddRecycleTask extends AppCompatActivity {
         String name =  et.getText().toString();
         items.add(name);
 
-        Intent mIntent = new Intent(this,MainActivityR.class);
+        Intent mIntent = new Intent(this,MainActivityRecycle.class);
         Bundle mBundle = new Bundle();
-        mBundle.putSerializable(MainActivityR.SER_KEY, items);
+        mBundle.putSerializable(MainActivityRecycle.SER_KEY, items);
         mIntent.putExtras(mBundle);
 
         startActivity(mIntent);
