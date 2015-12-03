@@ -15,7 +15,7 @@ public class MainActivityRecycle extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     public  final static String SER_KEY = "com.easyinfogeek.objectPass.ser.recycle";
-    private ArrayList<String> items;
+    private ArrayList<TaskItem> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +32,14 @@ public class MainActivityRecycle extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         // specify an adapter (see also next example)
-        items = new ArrayList<String>();
+        items = new ArrayList<TaskItem>();
 
         if (isExtrasEmpty()) { // if getSerializableExtraTasks is empty creates new tasks
-            items.add("tesk1");
-            items.add("tesk2");
-            items.add("tesk3");
-            items.add("tesk4");
-            items.add("tesk6");
-            items.add("tesk7");
-            items.add("tesk8");
+            items.add(new TaskItem("a","a"));
+            items.add(new TaskItem("a","a"));
+            items.add(new TaskItem("a","a"));
+            items.add(new TaskItem("a","a"));
+            items.add(new TaskItem("a","a"));
             mAdapter = new RecycleAdapterManager(items);
 
         } else { // else read them to memory
@@ -51,8 +49,8 @@ public class MainActivityRecycle extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public ArrayList<String> getSerializableExtraTasks(){
-        return  (ArrayList<String>)getIntent().getSerializableExtra(MainActivityAddRecycleTask.SER_KEY);
+    public ArrayList<TaskItem> getSerializableExtraTasks(){
+        return  (ArrayList<TaskItem>)getIntent().getSerializableExtra(ActivityAddRecycleTask.SER_KEY);
     }
 
     public boolean isExtrasEmpty(){
@@ -69,7 +67,7 @@ public class MainActivityRecycle extends AppCompatActivity {
     }
 
     public void GoToCreateTaskCreate(View v){
-        Intent mIntent = new Intent(this,MainActivityAddRecycleTask.class);
+        Intent mIntent = new Intent(this,ActivityAddRecycleTask.class);
         Bundle mBundle = new Bundle();
         mBundle.putSerializable(SER_KEY, items);
         mIntent.putExtras(mBundle);

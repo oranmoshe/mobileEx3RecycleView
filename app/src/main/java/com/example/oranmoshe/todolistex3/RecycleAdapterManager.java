@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class RecycleAdapterManager extends RecyclerView.Adapter<RecycleAdapterManager.ViewHolder> {
-    private ArrayList<String> mDataset;
+    private ArrayList<TaskItem> mDataset;
     private final ArrayList<Integer> selected = new ArrayList<>();
 
     // Provide a reference to the views for each data item
@@ -31,12 +31,12 @@ public class RecycleAdapterManager extends RecyclerView.Adapter<RecycleAdapterMa
         }
     }
 
-    public void add(int position, String item) {
+    public void add(int position, TaskItem item) {
         mDataset.add(position, item);
         notifyItemInserted(position);
     }
 
-    public void remove(String item) {
+    public void remove(TaskItem item) {
         int position = mDataset.indexOf(item);
         mDataset.remove(position);
         notifyItemRemoved(position);
@@ -48,7 +48,7 @@ public class RecycleAdapterManager extends RecyclerView.Adapter<RecycleAdapterMa
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecycleAdapterManager(ArrayList<String> myDataset) {
+    public RecycleAdapterManager(ArrayList<TaskItem> myDataset) {
         mDataset = myDataset;
     }
 
@@ -68,12 +68,12 @@ public class RecycleAdapterManager extends RecyclerView.Adapter<RecycleAdapterMa
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final String name = mDataset.get(position);
-        holder.txtHeader.setText(mDataset.get(position));
+        final TaskItem task = mDataset.get(position);
+        holder.txtHeader.setText(task.GetName());
         holder.txtHeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(name);
+                remove(task);
             }
         });
         holder.btn.setOnClickListener(new View.OnClickListener() {
